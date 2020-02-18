@@ -17,9 +17,9 @@ public final class FileProcessor {
 	private BufferedReader reader;
 	private String line;
 
-	public FileProcessor(String inputFilePath) 
-		throws InvalidPathException, SecurityException, FileNotFoundException, IOException {
-		
+	public FileProcessor(String inputFilePath)
+			throws InvalidPathException, SecurityException, FileNotFoundException, IOException {
+
 		if (!Files.exists(Paths.get(inputFilePath))) {
 			throw new FileNotFoundException("invalid input file or input file in incorrect location");
 		}
@@ -29,7 +29,8 @@ public final class FileProcessor {
 	}
 
 	public Integer poll() throws NumberFormatException, IOException {
-		if (null == line) return null;
+		if (null == line)
+			return null;
 
 		Integer newValue = Integer.parseInt(line.trim());
 		line = reader.readLine();
