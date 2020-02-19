@@ -1,6 +1,7 @@
 package numberPlay.driver;
 
-import numberPlay.util.*;
+import numberPlay.util.FileProcessor;
+import numberPlay.processing.NumberProcessor;
 
 /**
  * @author Kenneth Peter Faernandes
@@ -26,10 +27,13 @@ public class Driver {
 			System.exit(0);
 		}
 
-		FileProcessor fileProcessorObj = new FileProcessor(args[0]);
-		Integer val = 0;
-		while (v) {
-
+		FileProcessor fileProcessorObj = FileProcessor.getInstance(args[0]);
+		NumberProcessor numProcessorObj = NumberProcessor.getInstance();
+		String numString;
+		while ((numString = fileProcessorObj.poll()) != null) {
+			if (!numString.isEmpty()) {
+				numProcessorObj.processNumber(numString);
+			}
 		}
 
 		// FIXME Create an instance of each of the classes implementing PersisterI and

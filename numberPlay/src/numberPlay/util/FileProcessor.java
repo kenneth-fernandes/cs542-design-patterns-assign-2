@@ -5,7 +5,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.FileNotFoundException;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,8 +13,18 @@ import java.nio.file.InvalidPathException;
 import java.util.List;
 
 public final class FileProcessor {
+
+	private static FileProcessor fileProcessorObj;
 	private BufferedReader reader;
 	private String line;
+
+	public static FileProcessor getInstance(String inputFilePath)
+			throws InvalidPathException, SecurityException, FileNotFoundException, IOException {
+		if (fileProcessorObj == null) {
+			fileProcessorObj = new FileProcessor(inputFilePath);
+		}
+		return fileProcessorObj;
+	}
 
 	public FileProcessor(String inputFilePath)
 			throws InvalidPathException, SecurityException, FileNotFoundException, IOException {
@@ -28,11 +37,11 @@ public final class FileProcessor {
 		line = reader.readLine();
 	}
 
-	public Integer poll() throws NumberFormatException, IOException {
+	public String poll() throws NumberFormatException, IOException {
 		if (null == line)
 			return null;
 
-		Integer newValue = Integer.parseInt(line.trim());
+		String newValue = line.trim();
 		line = reader.readLine();
 		return newValue;
 	}
