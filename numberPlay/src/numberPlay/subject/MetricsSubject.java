@@ -2,7 +2,6 @@ package numberPlay.subject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 import numberPlay.filter.TriggerEventFilter.TriggerEvents;
@@ -11,9 +10,11 @@ import numberPlay.subject.SubjectI;
 
 public class MetricsSubject implements SubjectI {
 
-    private static SubjectI metricsSubjObj;
+    public static SubjectI metricsSubjObj;
 
     HashMap<Enum<TriggerEvents>, List<ObserverI>> metricsObserverMap;
+
+    
 
     private HashMap<Enum<TriggerEvents>, List<ObserverI>> instantiateObserverHashMap() {
         if (metricsObserverMap == null) {
@@ -45,5 +46,9 @@ public class MetricsSubject implements SubjectI {
     }
 
     public void notifyObservers(String str) {
+    }
+
+    public HashMap<Enum<TriggerEvents>, List<ObserverI>> getObsHasMap() {
+        return metricsObserverMap;
     }
 }
