@@ -1,8 +1,12 @@
 package numberPlay.observer;
 
+import numberPlay.filter.TriggerEventFilter.TriggerEvents;
+import numberPlay.processing.NumberProcessor;;
+
 public class RunningAverageObserver implements ObserverI {
 
     private static ObserverI runningAvgObsverObj;
+    private boolean isIntegerEvent;
 
     /**
      * Function to get instance of RunningAverageObserver
@@ -17,7 +21,10 @@ public class RunningAverageObserver implements ObserverI {
     }
 
     @Override
-    public void update() {
-        System.out.println("Running avg Observer");
+    public void update(TriggerEvents event) {
+        if (event == TriggerEvents.INTEGER_EVENT) {
+            isIntegerEvent = true;
+            int num = Integer.parseInt(NumberProcessor.getInstance().getCurrentNumStr());
+        }
     }
 }

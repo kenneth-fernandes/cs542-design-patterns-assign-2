@@ -1,8 +1,12 @@
 package numberPlay.observer;
 
+import numberPlay.filter.TriggerEventFilter.TriggerEvents;;
+
 public class NumberPeaksObserver implements ObserverI {
 
     private static ObserverI numPeaksObsrvrObj;
+
+    public boolean isIntegerEvent;
 
     /**
      * Function to get instance of NumberPeaksObserver
@@ -17,7 +21,13 @@ public class NumberPeaksObserver implements ObserverI {
     }
 
     @Override
-    public void update() {
-        System.out.println("Number peaks Observer");
+    public void update(TriggerEvents event) {
+        if (event == TriggerEvents.INTEGER_EVENT) {
+            isIntegerEvent = true;
+        } else {
+            if (event == TriggerEvents.FLOATING_POINT_EVENT) {
+                isIntegerEvent = false;
+            }
+        }
     }
 }

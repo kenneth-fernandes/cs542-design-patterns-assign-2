@@ -1,8 +1,11 @@
 package numberPlay.observer;
 
+import numberPlay.filter.TriggerEventFilter.TriggerEvents;
+
 public class TopKNumbersObserver implements ObserverI {
 
     private static ObserverI topKNumObsrvrsObj;
+    private boolean isIntegerEvent;
 
     /**
      * Function to get instance of TopKNumbersObserver
@@ -17,7 +20,13 @@ public class TopKNumbersObserver implements ObserverI {
     }
 
     @Override
-    public void update() {
-        System.out.println("Rop K Nums Observer");
+    public void update(TriggerEvents event) {
+        if (event == TriggerEvents.INTEGER_EVENT) {
+            isIntegerEvent = true;
+        } else {
+            if (event == TriggerEvents.FLOATING_POINT_EVENT) {
+                isIntegerEvent = false;
+            }
+        }
     }
 }
