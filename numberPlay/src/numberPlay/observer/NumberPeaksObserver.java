@@ -17,6 +17,7 @@ public class NumberPeaksObserver implements ObserverI {
     }
 
     @Override
-    public void update(Object obj) {
+    public void update() {
+        System.out.println("Number peaks Observer");
     }
 }

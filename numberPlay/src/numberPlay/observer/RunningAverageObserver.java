@@ -6,6 +6,7 @@ public class RunningAverageObserver implements ObserverI {
 
     /**
      * Function to get instance of RunningAverageObserver
+     * 
      * @return - The instance of the class RunningAverageObserver
      */
     public static ObserverI getInstance() {
@@ -15,8 +16,8 @@ public class RunningAverageObserver implements ObserverI {
         return runningAvgObsverObj;
     }
 
-
     @Override
-    public void update(Object obj) {
+    public void update() {
+        System.out.println("Running avg Observer");
     }
 }

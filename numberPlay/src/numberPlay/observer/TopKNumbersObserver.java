@@ -17,6 +17,7 @@ public class TopKNumbersObserver implements ObserverI {
     }
 
     @Override
-    public void update(Object obj) {
+    public void update() {
+        System.out.println("Rop K Nums Observer");
     }
 }

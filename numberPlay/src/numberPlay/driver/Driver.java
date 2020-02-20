@@ -1,8 +1,11 @@
 package numberPlay.driver;
 
 import numberPlay.util.FileProcessor;
+
+
 import numberPlay.filter.TriggerEventFilter.TriggerEvents;
 import numberPlay.observer.NumberPeaksObserver;
+
 import numberPlay.observer.RunningAverageObserver;
 import numberPlay.observer.TopKNumbersObserver;
 import numberPlay.processing.NumberProcessor;
@@ -40,24 +43,20 @@ public class Driver {
 		// Registering RunningAverageObserver object to Integer event
 
 		SubjectI metricsSubjObj = MetricsSubject.getInstance();
-		metricsSubjObj.registerObserver(RunningAverageObserver.getInstance(),
-				TriggerEvents.INTEGER_EVENT);
+
+		metricsSubjObj.registerObserver(RunningAverageObserver.getInstance(), TriggerEvents.INTEGER_EVENT);
 
 		// Registering TopKNumbersObserver object to Integer event
 		metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(), TriggerEvents.INTEGER_EVENT);
 
 		// Registering TopKNumbersObserver object to Floating point event
-		metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(),
-				TriggerEvents.FLOATING_POINT_EVENT);
+		metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(), TriggerEvents.FLOATING_POINT_EVENT);
 
 		// Registering NumberPeaksObserver object to Integer event
 		metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(), TriggerEvents.INTEGER_EVENT);
 
 		// Registering NumberPeaksObserver object to Floating point event
-		metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(),
-				TriggerEvents.FLOATING_POINT_EVENT);
-		
-		
+		metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(), TriggerEvents.FLOATING_POINT_EVENT);
 
 		// Retrieving the FileProcessor object
 		FileProcessor fileProcessorObj = FileProcessor.getInstance(args[0]);
