@@ -1,8 +1,7 @@
 package numberPlay.driver;
 
 import numberPlay.util.FileProcessor;
-
-
+import numberPlay.util.InputParametersData;
 import numberPlay.filter.TriggerEventFilter.TriggerEvents;
 import numberPlay.observer.NumberPeaksObserver;
 
@@ -37,29 +36,46 @@ public class Driver {
 		}
 
 		/*
-		 * Registering the observers based on events
+		 * Setting the input parameters into InputParametersData object data members
 		 */
+		InputParametersData inputParamsDataObj = InputParametersData.getInstance();
 
-		// Registering RunningAverageObserver object to Integer event
+		inputParamsDataObj.setInputFilePath(args[0]);
+		inputParamsDataObj.setRunAvgWindowSize(args[1]);
+		inputParamsDataObj.setRunAvgOutFile(args[2]);
+		inputParamsDataObj.setKValue(args[3]);
+		inputParamsDataObj.setTopKNumOutFilePath(args[4]);
+		inputParamsDataObj.setNumPeaksOutFilePath(args[5]);
 
+		/*
+		 * Registering the observers based on events section starts
+		 */
+		// Retrieving the MetricsSubject object
 		SubjectI metricsSubjObj = MetricsSubject.getInstance();
 
+		// Registering RunningAverageObserver object to Integer and Process complete
+		// events
 		metricsSubjObj.registerObserver(RunningAverageObserver.getInstance(), TriggerEvents.INTEGER_EVENT);
+		metricsSubjObj.registerObserver(RunningAverageObserver.getInstance(), TriggerEvents.PROCESSING_COMPLETE);
 
-		// Registering TopKNumbersObserver object to Integer event
+		// Registering TopKNumbersObserver object to Integer, Floating and Process
+		// Complete event
 		metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(), TriggerEvents.INTEGER_EVENT);
-
-		// Registering TopKNumbersObserver object to Floating point event
 		metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(), TriggerEvents.FLOATING_POINT_EVENT);
+		metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(), TriggerEvents.PROCESSING_COMPLETE);
 
-		// Registering NumberPeaksObserver object to Integer event
+		// Registering NumberPeaksObserver object to Integer, Floating point and process
+		// complete events
 		metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(), TriggerEvents.INTEGER_EVENT);
-
-		// Registering NumberPeaksObserver object to Floating point event
 		metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(), TriggerEvents.FLOATING_POINT_EVENT);
+		metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(), TriggerEvents.PROCESSING_COMPLETE);
+
+		/*
+		 * Registering the observers based on events section ends
+		 */
 
 		// Retrieving the FileProcessor object
-		FileProcessor fileProcessorObj = FileProcessor.getInstance(args[0]);
+		FileProcessor fileProcessorObj = FileProcessor.getInstance(inputParamsDataObj.getInputFilePath());
 		// Retrieving the NumberProcessor object
 		NumberProcessor numProcessorObj = NumberProcessor.getInstance();
 
