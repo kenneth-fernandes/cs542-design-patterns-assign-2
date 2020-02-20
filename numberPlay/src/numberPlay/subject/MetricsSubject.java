@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 import numberPlay.filter.TriggerEventFilter.TriggerEvents;
 import numberPlay.observer.ObserverI;
 import numberPlay.subject.SubjectI;
@@ -29,6 +28,7 @@ public class MetricsSubject implements SubjectI {
         return metricsSubjObj;
     }
 
+    @Override
     public void registerObserver(ObserverI observerObj, TriggerEvents eventKey) {
 
         instantiateObserverHashMap();
@@ -44,14 +44,16 @@ public class MetricsSubject implements SubjectI {
         }
     }
 
+    @Override
     public void notifyAllObservers(TriggerEvents triggerEventKey) {
         List<ObserverI> observerLst = metricsObserverMap.get(triggerEventKey);
         for (ObserverI observerObj : observerLst) {
-            observerObj.update();
+            observerObj.update(triggerEventKey);
         }
 
     }
 
+    @Override
     public HashMap<Enum<TriggerEvents>, List<ObserverI>> getObserverHashMap() {
         return metricsObserverMap;
     }
