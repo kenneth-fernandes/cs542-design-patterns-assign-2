@@ -7,14 +7,12 @@ public class RunAvgCalnQueue implements QueueI {
     private int queueWindowSize;
     private int queueFront;
     private int queueRear;
-    private int queueElemCount;
 
     private RunAvgCalnQueue(int windowSize) {
         queueArr = new int[windowSize];
         queueWindowSize = windowSize;
-        queueElemCount = 0;
         queueFront = 0;
-        queueRear = -1;
+        queueRear = 0;
 
     }
 
@@ -25,16 +23,16 @@ public class RunAvgCalnQueue implements QueueI {
         return queueObj;
     }
 
-    public int getQueueSize() {
-        return queueElemCount;
+    public int getElemsInQueueCount() {
+        return queueRear;
     }
 
     public boolean isQueueEmpty() {
-        return queueElemCount == 0;
+        return queueRear == queueFront;
     }
 
     public boolean isQueueFull() {
-        return queueElemCount == queueWindowSize;
+        return queueRear == queueWindowSize;
     }
 
     public int peek() {
@@ -50,9 +48,10 @@ public class RunAvgCalnQueue implements QueueI {
             System.out.println("Queue is full.");
             return;
         } else {
-            queueRear = (++queueRear) % queueWindowSize;
+           // System.out.println("Inserting elem : " + element + " at "+ queueRear);
             queueArr[queueRear] = element;
-            queueElemCount += 1;
+            queueRear += 1;
+
         }
     }
 
@@ -60,8 +59,17 @@ public class RunAvgCalnQueue implements QueueI {
         if (isQueueEmpty()) {
             System.out.println("Queue is empty.");
         } else {
-            queueFront = (++queueFront) % queueWindowSize;
-            queueElemCount -= 1;
+            for (int i = 0; i < queueRear - 1; i += 1) {
+                queueArr[i] = queueArr[i+1];
+            }
+            if (queueRear < queueWindowSize) {
+                queueArr[queueRear] = 0;
+            }
+            queueRear -= 1;
         }
+    }
+
+    public int[] getElementsInQueue() {
+        return queueArr;
     }
 }

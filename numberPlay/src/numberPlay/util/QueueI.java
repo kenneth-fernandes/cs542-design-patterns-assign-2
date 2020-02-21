@@ -1,7 +1,7 @@
 package numberPlay.util;
 
 public interface QueueI {
-    public int getQueueSize();
+    public int getElemsInQueueCount();
 
     public boolean isQueueEmpty();
 
@@ -12,5 +12,6 @@ public interface QueueI {
     public void enqueue(int element);
 
     public void dequeue();
+    
 
 }

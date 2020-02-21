@@ -24,7 +24,6 @@ public class NumberProcessor {
     public void processNumber(String numString) {
         currentNumberStr = numString;
         if (numString.matches(floatPatternStr)) {
-
             MetricsSubject.getInstance().notifyAllObservers(TriggerEvents.FLOATING_POINT_EVENT);
         } else {
             if (numString.matches(integerPatternStr)) {
