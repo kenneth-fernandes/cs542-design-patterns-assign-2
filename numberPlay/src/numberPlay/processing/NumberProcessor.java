@@ -25,10 +25,11 @@ public class NumberProcessor {
     public void processNumber(String numString) {
         currentNumberStr = numString;
         if (numString.matches(floatPatternStr)) {
-            MetricsSubject.getInstance().notifyAllObservers(IntegerEventFilter.getInstance(), numString);
+            MetricsSubject.getInstance().notifyAllObservers(FloatingPointEventFilter.getInstance(), numString);
         } else {
             if (numString.matches(integerPatternStr)) {
-                MetricsSubject.getInstance().notifyAllObservers(FloatingPointEventFilter.getInstance(), numString);
+                
+                MetricsSubject.getInstance().notifyAllObservers(IntegerEventFilter.getInstance(), numString);
             }
         }
     }

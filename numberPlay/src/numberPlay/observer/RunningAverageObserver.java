@@ -1,13 +1,17 @@
 package numberPlay.observer;
 
 import numberPlay.filter.FilterI;
+import numberPlay.filter.IntegerEventFilter;
+import numberPlay.filter.ProcessingCompleteEventFilter;
 import numberPlay.processing.NumberProcessor;
-import numberPlay.util.RunAvgCalnQueue;
+import numberPlay.util.InputParametersData;
+import numberPlay.util.RunningAverageQueue;
 
 public class RunningAverageObserver implements ObserverI {
 
-    private static ObserverI runningAvgObsverObj;
-    private boolean isIntegerEvent;
+    private static RunningAverageObserver runningAvgObsverObj;
+    private RunningAverageQueue runAvgQueue;
+
     private String outputStr = "";
 
     /**
@@ -22,27 +26,40 @@ public class RunningAverageObserver implements ObserverI {
         return runningAvgObsverObj;
     }
 
-    @Override
-    public void update(FilterI triggerEvent,String dataString) {
-        //if (event.test(str)) {
-            Double avg = 0.0;
-            isIntegerEvent = true;
-            int num = Integer.parseInt(NumberProcessor.getInstance().getCurrentNumStr());
-            RunAvgCalnQueue q = RunAvgCalnQueue.getInstance();
-            if (q.isQueueFull()) {
-                q.dequeue();
-            }
-            q.enqueue(num);
+    public RunningAverageObserver() {
+        runAvgQueue = new RunningAverageQueue(InputParametersData.getInstance().getRunAvgWindowSize());
+    }
 
-            int[] elemArr = q.getElementsInQueue();
-            
-            for (int i = 0; i < q.getElemsInQueueCount(); i += 1) {
+    @Override
+    public void update(FilterI triggerEvent, String dataString) {
+
+        if (triggerEvent.equals(IntegerEventFilter.getInstance())) {
+
+            Double avg = 0.0;
+
+            int num = Integer.parseInt(NumberProcessor.getInstance().getCurrentNumStr());
+
+            if (runAvgQueue.isQueueFull()) {
+                runAvgQueue.dequeue();
+            }
+            runAvgQueue.enqueue(num);
+
+            int[] elemArr = runAvgQueue.getElementsInQueue();
+
+            for (int i = 0; i < runAvgQueue.getElemsInQueueCount(); i += 1) {
                 avg += elemArr[i];
             }
-            avg /= (double) q.getElemsInQueueCount();
-            outputStr = outputStr.concat(avg+"\n");
-            //System.out.println(outputStr);
+            avg /= (double) runAvgQueue.getElemsInQueueCount();
+            outputStr = outputStr.concat(avg + ",");
+            // System.out.println(outputStr);
 
-       // }
+            // }
+
+        } else {
+            if (triggerEvent.equals(ProcessingCompleteEventFilter.getInstance())) {
+
+            }
+        }
+
     }
 }

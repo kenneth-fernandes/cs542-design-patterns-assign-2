@@ -1,7 +1,7 @@
 package numberPlay.util;
 
-public class RunAvgCalnQueue implements QueueI {
-    private static RunAvgCalnQueue queueObj;
+public class RunningAverageQueue implements QueueI {
+    // private static Queue queueObj;
 
     private int[] queueArr;
     private int queueWindowSize;
@@ -9,20 +9,13 @@ public class RunAvgCalnQueue implements QueueI {
     private int queueRear;
     private UtilityConstants utilConstsObj;
 
-    private RunAvgCalnQueue(int windowSize) {
+    public RunningAverageQueue(int windowSize) {
         queueArr = new int[windowSize];
         queueWindowSize = windowSize;
         queueFront = 0;
         queueRear = 0;
         utilConstsObj = UtilityConstants.getInstance();
 
-    }
-
-    public static RunAvgCalnQueue getInstance() {
-        if (null == queueObj)
-            queueObj = new RunAvgCalnQueue(InputParametersData.getInstance().getRunAvgWindowSize());
-
-        return queueObj;
     }
 
     public int getElemsInQueueCount() {

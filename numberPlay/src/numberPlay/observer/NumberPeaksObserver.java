@@ -4,7 +4,7 @@ import numberPlay.filter.FilterI;
 
 public class NumberPeaksObserver implements ObserverI {
 
-    private static ObserverI numPeaksObsrvrObj;
+    private static NumberPeaksObserver numPeaksObsrvrObj;
 
     public boolean isIntegerEvent;
 
