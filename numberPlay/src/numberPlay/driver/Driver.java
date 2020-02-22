@@ -2,6 +2,7 @@ package numberPlay.driver;
 
 import numberPlay.util.FileProcessor;
 import numberPlay.util.InputParametersData;
+import numberPlay.util.UtilityConstants;
 import numberPlay.filter.FloatingPointEventFilter;
 import numberPlay.filter.IntegerEventFilter;
 import numberPlay.filter.ProcessingCompleteEventFilter;
@@ -18,6 +19,7 @@ import numberPlay.subject.SubjectI;
  */
 public class Driver {
 	public static void main(String[] args) throws Exception {
+		UtilityConstants utilConstsObj = UtilityConstants.getInstance();
 
 		/*
 		 * As the build.xml specifies the arguments as argX, in case the argument value
@@ -26,13 +28,14 @@ public class Driver {
 		 * validation design taught in class.
 		 */
 		final int REQUIRED_NUMBER_OF_ARGS = 6;
-		if ((args.length != REQUIRED_NUMBER_OF_ARGS) || (args[0].equals("${inputNumStream}"))
-				|| (args[1].equals("${runAvgWindowSize}")) || (args[2].equals("${runAvgOutFile}"))
-				|| (args[3].equals("${k}")) || (args[4].equals("${topKNumOutFile}"))
-				|| (args[5].equals("${numPeaksOutFile}"))) {
+		if ((args.length != REQUIRED_NUMBER_OF_ARGS) || (args[0].equals(utilConstsObj.INPUT_FILEPATH_ARG))
+				|| (args[1].equals(utilConstsObj.RUNNING_AVG_WINDOW_SIZE_INPUT_ARG))
+				|| (args[2].equals(utilConstsObj.RUNNING_AVG_OUTPUT_FILEPATH_ARG))
+				|| (args[3].equals(utilConstsObj.K_VALUE_ARG))
+				|| (args[4].equals(utilConstsObj.TOP_K_NUMBERS_OUTPUT_FILEPATH_ARG))
+				|| (args[5].equals(utilConstsObj.NUMBER_PEAKS_OUTPUT_FILEPATH_ARG))) {
 
-			System.err.printf("Error: Incorrect number of arguments. Program accepts %d arguments.",
-					REQUIRED_NUMBER_OF_ARGS);
+			System.err.printf(utilConstsObj.INVALID_ARGUMENTS_ERROR_MESSAGE, REQUIRED_NUMBER_OF_ARGS);
 
 			System.exit(0);
 		}
@@ -58,7 +61,8 @@ public class Driver {
 		// Registering RunningAverageObserver object to Integer and Process complete
 		// events
 		metricsSubjObj.registerObserver(RunningAverageObserver.getInstance(), IntegerEventFilter.getInstance());
-		metricsSubjObj.registerObserver(RunningAverageObserver.getInstance(), ProcessingCompleteEventFilter.getInstance());
+		metricsSubjObj.registerObserver(RunningAverageObserver.getInstance(),
+				ProcessingCompleteEventFilter.getInstance());
 
 		// Registering TopKNumbersObserver object to Integer, Floating and Process
 		// Complete event
