@@ -1,7 +1,6 @@
 package numberPlay.util;
 
 public class RunningAverageQueue implements QueueI {
-    // private static Queue queueObj;
 
     private int[] queueArr;
     private int queueWindowSize;

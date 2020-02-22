@@ -1,8 +1,6 @@
 package numberPlay.observer;
 
 import numberPlay.filter.FilterI;
-import numberPlay.filter.FloatingPointEventFilter;
-import numberPlay.filter.IntegerEventFilter;
 import numberPlay.filter.ProcessingCompleteEventFilter;
 import numberPlay.util.InputParametersData;
 import numberPlay.util.TopKNumbersQueue;
@@ -11,7 +9,6 @@ public class TopKNumbersObserver implements ObserverI {
 
     private static TopKNumbersObserver topKNumObservrsObj;
     private TopKNumbersQueue topKNumArrObj;
-    
 
     private TopKNumbersObserver() {
         topKNumArrObj = new TopKNumbersQueue(InputParametersData.getInstance().getKValue());
@@ -31,10 +28,8 @@ public class TopKNumbersObserver implements ObserverI {
 
     @Override
     public void update(FilterI triggerEvent, String dataString) {
-        if (triggerEvent.equals(IntegerEventFilter.getInstance())
-                || triggerEvent.equals(FloatingPointEventFilter.getInstance())) {
+        if (!triggerEvent.equals(ProcessingCompleteEventFilter.getInstance())) {
 
-            
             double num = Double.parseDouble(dataString);
             if (topKNumArrObj.isQueueFull()) {
                 topKNumArrObj.dequeue();
@@ -48,9 +43,6 @@ public class TopKNumbersObserver implements ObserverI {
             System.out.println();
 
         } else {
-            if (triggerEvent.equals(ProcessingCompleteEventFilter.getInstance())) {
-
-            }
         }
 
     }

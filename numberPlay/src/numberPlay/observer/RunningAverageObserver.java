@@ -1,7 +1,6 @@
 package numberPlay.observer;
 
 import numberPlay.filter.FilterI;
-import numberPlay.filter.IntegerEventFilter;
 import numberPlay.filter.ProcessingCompleteEventFilter;
 import numberPlay.processing.NumberProcessor;
 import numberPlay.util.InputParametersData;
@@ -33,7 +32,7 @@ public class RunningAverageObserver implements ObserverI {
     @Override
     public void update(FilterI triggerEvent, String dataString) {
 
-        if (triggerEvent.equals(IntegerEventFilter.getInstance())) {
+        if (!triggerEvent.equals(ProcessingCompleteEventFilter.getInstance())) {
 
             Double avg = 0.0;
 
@@ -56,9 +55,7 @@ public class RunningAverageObserver implements ObserverI {
             // }
 
         } else {
-            if (triggerEvent.equals(ProcessingCompleteEventFilter.getInstance())) {
 
-            }
         }
 
     }
