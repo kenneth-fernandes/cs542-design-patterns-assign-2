@@ -2,7 +2,9 @@ package numberPlay.driver;
 
 import numberPlay.util.FileProcessor;
 import numberPlay.util.InputParametersData;
-import numberPlay.filter.TriggerEventFilter.TriggerEvents;
+import numberPlay.filter.FloatingPointEventFilter;
+import numberPlay.filter.IntegerEventFilter;
+import numberPlay.filter.ProcessingCompleteEventFilter;
 import numberPlay.observer.NumberPeaksObserver;
 
 import numberPlay.observer.RunningAverageObserver;
@@ -55,20 +57,20 @@ public class Driver {
 
 		// Registering RunningAverageObserver object to Integer and Process complete
 		// events
-		metricsSubjObj.registerObserver(RunningAverageObserver.getInstance(), TriggerEvents.INTEGER_EVENT);
-		metricsSubjObj.registerObserver(RunningAverageObserver.getInstance(), TriggerEvents.PROCESSING_COMPLETE);
+		metricsSubjObj.registerObserver(RunningAverageObserver.getInstance(), IntegerEventFilter.getInstance());
+		metricsSubjObj.registerObserver(RunningAverageObserver.getInstance(), ProcessingCompleteEventFilter.getInstance());
 
 		// Registering TopKNumbersObserver object to Integer, Floating and Process
 		// Complete event
-		metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(), TriggerEvents.INTEGER_EVENT);
-		metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(), TriggerEvents.FLOATING_POINT_EVENT);
-		metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(), TriggerEvents.PROCESSING_COMPLETE);
+		metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(), IntegerEventFilter.getInstance());
+		metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(), FloatingPointEventFilter.getInstance());
+		metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(), ProcessingCompleteEventFilter.getInstance());
 
 		// Registering NumberPeaksObserver object to Integer, Floating point and process
 		// complete events
-		metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(), TriggerEvents.INTEGER_EVENT);
-		metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(), TriggerEvents.FLOATING_POINT_EVENT);
-		metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(), TriggerEvents.PROCESSING_COMPLETE);
+		metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(), IntegerEventFilter.getInstance());
+		metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(), FloatingPointEventFilter.getInstance());
+		metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(), ProcessingCompleteEventFilter.getInstance());
 
 		/*
 		 * Registering the observers based on events section ends

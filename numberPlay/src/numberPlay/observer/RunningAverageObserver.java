@@ -1,6 +1,6 @@
 package numberPlay.observer;
 
-import numberPlay.filter.TriggerEventFilter.TriggerEvents;
+import numberPlay.filter.FilterI;
 import numberPlay.processing.NumberProcessor;
 import numberPlay.util.RunAvgCalnQueue;
 
@@ -8,6 +8,7 @@ public class RunningAverageObserver implements ObserverI {
 
     private static ObserverI runningAvgObsverObj;
     private boolean isIntegerEvent;
+    private String outputStr = "";
 
     /**
      * Function to get instance of RunningAverageObserver
@@ -22,8 +23,8 @@ public class RunningAverageObserver implements ObserverI {
     }
 
     @Override
-    public void update(TriggerEvents event) {
-        if (event == TriggerEvents.INTEGER_EVENT) {
+    public void update(FilterI triggerEvent,String dataString) {
+        //if (event.test(str)) {
             Double avg = 0.0;
             isIntegerEvent = true;
             int num = Integer.parseInt(NumberProcessor.getInstance().getCurrentNumStr());
@@ -34,14 +35,14 @@ public class RunningAverageObserver implements ObserverI {
             q.enqueue(num);
 
             int[] elemArr = q.getElementsInQueue();
-            System.out.println("Queue: - ");
+            
             for (int i = 0; i < q.getElemsInQueueCount(); i += 1) {
-                System.out.println(elemArr[i]);
                 avg += elemArr[i];
             }
             avg /= (double) q.getElemsInQueueCount();
-            System.out.println(" : Avg - " + avg);
+            outputStr = outputStr.concat(avg+"\n");
+            //System.out.println(outputStr);
 
-        }
+       // }
     }
 }

@@ -1,6 +1,7 @@
 package numberPlay.processing;
 
-import numberPlay.filter.TriggerEventFilter.TriggerEvents;
+import numberPlay.filter.FloatingPointEventFilter;
+import numberPlay.filter.IntegerEventFilter;
 import numberPlay.subject.MetricsSubject;
 
 public class NumberProcessor {
@@ -24,10 +25,10 @@ public class NumberProcessor {
     public void processNumber(String numString) {
         currentNumberStr = numString;
         if (numString.matches(floatPatternStr)) {
-            MetricsSubject.getInstance().notifyAllObservers(TriggerEvents.FLOATING_POINT_EVENT);
+            MetricsSubject.getInstance().notifyAllObservers(IntegerEventFilter.getInstance(), numString);
         } else {
             if (numString.matches(integerPatternStr)) {
-                MetricsSubject.getInstance().notifyAllObservers(TriggerEvents.INTEGER_EVENT);
+                MetricsSubject.getInstance().notifyAllObservers(FloatingPointEventFilter.getInstance(), numString);
             }
         }
     }

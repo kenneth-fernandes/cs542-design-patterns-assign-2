@@ -1,6 +1,7 @@
 package numberPlay.observer;
 
-import numberPlay.filter.TriggerEventFilter.TriggerEvents;
+import numberPlay.filter.FilterI;
+
 
 public class TopKNumbersObserver implements ObserverI {
 
@@ -20,13 +21,7 @@ public class TopKNumbersObserver implements ObserverI {
     }
 
     @Override
-    public void update(TriggerEvents event) {
-        if (event == TriggerEvents.INTEGER_EVENT) {
-            isIntegerEvent = true;
-        } else {
-            if (event == TriggerEvents.FLOATING_POINT_EVENT) {
-                isIntegerEvent = false;
-            }
-        }
+    public void update(FilterI triggerEvent, String dataString) {
+        
     }
 }

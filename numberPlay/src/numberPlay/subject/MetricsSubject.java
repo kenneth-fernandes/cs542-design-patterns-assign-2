@@ -3,8 +3,9 @@ package numberPlay.subject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
-import numberPlay.filter.TriggerEventFilter.TriggerEvents;
+import numberPlay.filter.FilterI;
 import numberPlay.observer.ObserverI;
 import numberPlay.subject.SubjectI;
 
@@ -12,11 +13,11 @@ public class MetricsSubject implements SubjectI {
 
     public static SubjectI metricsSubjObj;
 
-    HashMap<Enum<TriggerEvents>, List<ObserverI>> metricsObserverMap;
+    HashMap<FilterI, List<ObserverI>> metricsObserverMap;
 
-    private HashMap<Enum<TriggerEvents>, List<ObserverI>> instantiateObserverHashMap() {
+    private HashMap<FilterI, List<ObserverI>> instantiateObserverHashMap() {
         if (metricsObserverMap == null) {
-            metricsObserverMap = new HashMap<Enum<TriggerEvents>, List<ObserverI>>();
+            metricsObserverMap = new HashMap<FilterI, List<ObserverI>>();
         }
         return metricsObserverMap;
     }
@@ -29,7 +30,7 @@ public class MetricsSubject implements SubjectI {
     }
 
     @Override
-    public void registerObserver(ObserverI observerObj, TriggerEvents eventKey) {
+    public void registerObserver(ObserverI observerObj, FilterI eventKey) {
 
         instantiateObserverHashMap();
 
@@ -45,16 +46,22 @@ public class MetricsSubject implements SubjectI {
     }
 
     @Override
-    public void notifyAllObservers(TriggerEvents triggerEventKey) {
-        List<ObserverI> observerLst = metricsObserverMap.get(triggerEventKey);
-        for (ObserverI observerObj : observerLst) {
-            observerObj.update(triggerEventKey);
+    public void notifyAllObservers(FilterI triggerEventFilterKey, String dataStr) {
+        for (Entry<FilterI, List<ObserverI>> entry : metricsObserverMap.entrySet()) {
+            if (entry.getKey().equals(triggerEventFilterKey) && entry.getKey().test(dataStr)) {
+
+                for (ObserverI observer : entry.getValue()) {
+
+                    observer.update(entry.getKey(), dataStr);
+                }
+            }
+
         }
 
     }
 
     @Override
-    public HashMap<Enum<TriggerEvents>, List<ObserverI>> getObserverHashMap() {
+    public HashMap<FilterI, List<ObserverI>> getObserverHashMap() {
         return metricsObserverMap;
     }
 }

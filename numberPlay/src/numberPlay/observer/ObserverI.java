@@ -1,8 +1,8 @@
 package numberPlay.observer;
 
 
-import numberPlay.filter.TriggerEventFilter.TriggerEvents;
+import numberPlay.filter.FilterI;
 
 public interface ObserverI {
-    public void update(TriggerEvents event);
+    public void update(FilterI triggerEvntObj, String dataString);
 }
