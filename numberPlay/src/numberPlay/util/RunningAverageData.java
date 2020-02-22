@@ -1,12 +1,25 @@
 package numberPlay.util;
 
 public class RunningAverageData implements PersisterI, RunningAverageResultsI {
-	@Override
-	public void store(Double d) {}
+
+	private static RunningAverageData runningAvgDatObj;
+
+	public static RunningAverageData getInstance() {
+		if (runningAvgDatObj == null) {
+			runningAvgDatObj = new RunningAverageData();
+		}
+		return runningAvgDatObj;
+	}
 
 	@Override
-	public void writeToFile() {}
+	public void store(Double d) {
+	}
 
 	@Override
-	public void close() {}
+	public void writeToFile() {
+	}
+
+	@Override
+	public void close() {
+	}
 }

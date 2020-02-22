@@ -34,12 +34,12 @@ Description: Compiles your code and generates .class files inside the BUILD fold
 
 ```commandline
 ant run -buildfile numberPlay/src/build.xml \
--DinputNumStream="<input file path>" \
--DrunAvgWindowSize="<size of the window for running average calculations>" \
--DrunAvgOutFile="<output file path to which running averages are written>" \
--Dk="<max size of the list containing the top K numbers>" \
--DtopKNumOutFile="<path of output file to which the top K numbers are written>" \
--DnumPeaksOutFile="<path of output file to which the peaks in the number stream are written>"
+-DinputNumStream="inputFile/input.txt" \
+-DrunAvgWindowSize=3 \
+-DrunAvgOutFile="src/BUILD/resultFiles/run-avg-out.txt" \
+-Dk=3 \
+-DtopKNumOutFile="src/BUILD/resultFiles/top-k-out.txt" \
+-DnumPeaksOutFile="src/BUILD/resultFiles/peaks-out.txt"
 ```
 
 -----------------------------------------------------------------------
@@ -56,6 +56,6 @@ I am involved in plagiarism or cheating an official form will be
 submitted to the Academic Honesty Committee of the Watson School to
 determine the action that needs to be taken. "
 
-Date: [ADD_DATE_HERE]
+Date: [02/13/2020]
 
 
