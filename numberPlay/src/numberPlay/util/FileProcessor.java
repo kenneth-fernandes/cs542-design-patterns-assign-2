@@ -10,10 +10,17 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.InvalidPathException;
 
+/**
+ * Class that has methods that retrieves the input file and reads the data
+ * present in the file
+ */
 public final class FileProcessor {
-
+	// Data member of FileProcessor that stores its own object
 	private static FileProcessor fileProcessorObj;
+	// Data member of FileProcessor that stores Buffered reader object
 	private BufferedReader reader;
+	// Data member of FileProcessor that stores the current line read from the input
+	// file
 	private String line;
 
 	public static FileProcessor getInstance(String inputFilePath)
@@ -24,6 +31,18 @@ public final class FileProcessor {
 		return fileProcessorObj;
 	}
 
+	/**
+	 * Constructor of FileProcessor initiating the File reading process
+	 * 
+	 * @param inputFilePath - The path for input.txt
+	 * @throws InvalidPathException  - Exception that occurs if path is invalid
+	 * @throws SecurityException     - Exception that occurs if the security manager
+	 *                               to indicate a security violation.
+	 * @throws FileNotFoundException - Exception that occurs when File is not found
+	 *                               on the given file path
+	 * @throws IOException           - Exceptions that occur due to File I/O
+	 *                               operations
+	 */
 	public FileProcessor(String inputFilePath)
 			throws InvalidPathException, SecurityException, FileNotFoundException, IOException {
 
@@ -35,7 +54,13 @@ public final class FileProcessor {
 		line = reader.readLine();
 	}
 
-	public String poll() throws NumberFormatException, IOException {
+	/**
+	 * Function that returns the line read by line reader from the input file
+	 * 
+	 * @return - line read by line reader from the input file
+	 * @throws IOException - Exceptions that occur due to File I/O operations
+	 */
+	public String poll() throws IOException {
 		if (null == line)
 			return null;
 
@@ -44,6 +69,11 @@ public final class FileProcessor {
 		return newValue;
 	}
 
+	/**
+	 * Function that closes the reader object
+	 * 
+	 * @throws IOException - Exceptions that occur due to File I/O operations
+	 */
 	public void close() throws IOException {
 		try {
 			reader.close();

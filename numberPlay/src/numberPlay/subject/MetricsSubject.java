@@ -29,6 +29,24 @@ public class MetricsSubject implements SubjectI {
         return metricsSubjObj;
     }
 
+    /**
+     * Function that retrieves the Observer List HasMap based on the subscribed
+     * events
+     * 
+     * @return - HashMap object of Observers list
+     */
+    @Override
+    public HashMap<FilterI, List<ObserverI>> getObserverHashMap() {
+        return metricsObserverMap;
+    }
+
+    /**
+     * Function that registers the Observer to a particular event
+     * 
+     * @param observerObj  - Object of the observer class that implements Observer
+     *                     interface
+     * @param triggerEvent - Filter obejct containing the trigger event
+     */
     @Override
     public void registerObserver(ObserverI observerObj, FilterI eventKey) {
 
@@ -45,15 +63,19 @@ public class MetricsSubject implements SubjectI {
         }
     }
 
+    /**
+     * Function that notifies all the observer based on the trigger event filter
+     * 
+     * @param triggerEvent - Filter obejct containing the trigger event
+     * @param dataStr      - Input data of type string
+     */
     @Override
-    public void notifyAllObservers(FilterI triggerEventFilterKey, String dataStr) {
+    public void notifyAllObservers(FilterI triggerEvent, String dataStr) {
+
         for (Entry<FilterI, List<ObserverI>> entry : metricsObserverMap.entrySet()) {
-            if (entry.getKey().equals(triggerEventFilterKey) && entry.getKey().test(dataStr)) {
-
+            if (entry.getKey().test(dataStr) && entry.getKey().equals(triggerEvent)) {
                 for (ObserverI observer : entry.getValue()) {
-
                     observer.update(entry.getKey(), dataStr);
-                    
                 }
             }
 
@@ -61,8 +83,4 @@ public class MetricsSubject implements SubjectI {
 
     }
 
-    @Override
-    public HashMap<FilterI, List<ObserverI>> getObserverHashMap() {
-        return metricsObserverMap;
-    }
 }

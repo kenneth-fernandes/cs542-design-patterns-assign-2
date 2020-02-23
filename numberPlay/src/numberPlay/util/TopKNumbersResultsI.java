@@ -7,5 +7,9 @@ import java.util.List;
  * intend to store the top K numbers when processing a stream of numbers.
  */
 public interface TopKNumbersResultsI {
+	/**
+	 * Function to store the list data
+	 * @param topK
+	 */
 	void store(List<Double> topK);
 }

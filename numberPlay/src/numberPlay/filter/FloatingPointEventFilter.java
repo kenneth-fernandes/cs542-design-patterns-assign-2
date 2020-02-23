@@ -1,12 +1,16 @@
 package numberPlay.filter;
 
-import java.lang.Double;
+import numberPlay.util.UtilityConstants;
 
 public class FloatingPointEventFilter implements FilterI {
 
     private static FloatingPointEventFilter floatPointEvntFilterObj;
-    // private BigDecimal bigDecimalNum;
 
+    /**
+     * Function that returns the object of its own class - FloatingPointEventFilter
+     * 
+     * @return - Object of the class FloatingPointEventFilter
+     */
     public static FloatingPointEventFilter getInstance() {
         if (null == floatPointEvntFilterObj) {
             floatPointEvntFilterObj = new FloatingPointEventFilter();
@@ -14,17 +18,21 @@ public class FloatingPointEventFilter implements FilterI {
         return floatPointEvntFilterObj;
     }
 
+    /**
+     * Empty FloatingPointEventFilter class constructor
+     */
     private FloatingPointEventFilter() {
     }
 
+    /**
+     * Function to test data for Floating point
+     * 
+     * @param str - Data of string type
+     * @return - boolean value true or false
+     */
     @Override
     public boolean test(final String str) {
-        try {
-            Double num = Double.parseDouble(str);
-            return (num >= Double.MIN_VALUE) && (num <= Double.MAX_VALUE);
-        } catch (NumberFormatException ex) {
-            return false;
-        }
+        return str.matches(UtilityConstants.getInstance().FLOATING_POINT_REG_EXP_STRING);
     }
 
 }

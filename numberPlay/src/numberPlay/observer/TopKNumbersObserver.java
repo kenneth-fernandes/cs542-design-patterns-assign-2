@@ -3,17 +3,29 @@ package numberPlay.observer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import numberPlay.filter.FilterI;
 import numberPlay.filter.ProcessingCompleteEventFilter;
+
+import numberPlay.processing.NumberProcessor;
+
 import numberPlay.util.InputParametersData;
 import numberPlay.util.TopKNumbersData;
 
+/**
+ * Class containing methods to implement the Top K Numbers functionality
+ */
 public class TopKNumbersObserver implements ObserverI {
-
+    // Data member of TopKNumbersObserver that stores its own object
     private static TopKNumbersObserver topKNumObservrsObj;
+    // Data member of TopKNumbersObserver that stores the object of TopKNumbersData
     private TopKNumbersData topKNumDataObj;
-    List<Double> topKNumberLst;
+    // Data member of TopKNumbersObserver that stores the list of Top K Numbers
+    private List<Double> topKNumberLst;
 
+    /**
+     * TopKNumbersObserver constructor
+     */
     private TopKNumbersObserver() {
 
         topKNumDataObj = TopKNumbersData.getInstance();
@@ -32,11 +44,18 @@ public class TopKNumbersObserver implements ObserverI {
         return topKNumObservrsObj;
     }
 
+    /**
+     * Function that intiates the functionality of the top k elements
+     * 
+     * @param triggerEvent - - Trigger event Filter object
+     * @param dataString   - Data of type string
+     */
+
     @Override
     public void update(FilterI triggerEvent, String dataString) {
         if (!triggerEvent.equals(ProcessingCompleteEventFilter.getInstance())) {
 
-            double currentNum = Double.parseDouble(dataString);
+            double currentNum = NumberProcessor.getInstance().roundNumber(Double.parseDouble(dataString));
             if (topKNumberLst.size() == InputParametersData.getInstance().getKValue()) {
                 topKNumberLst.remove(topKNumberLst.size() - 1);
             }
@@ -49,7 +68,6 @@ public class TopKNumbersObserver implements ObserverI {
         } else {
             topKNumDataObj.writeToFile();
             topKNumDataObj.close();
-            ;
         }
 
     }
