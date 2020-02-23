@@ -53,7 +53,7 @@ public class NumberProcessor {
      * 
      * @param numString - Number in the form of string
      */
-    public void processNumber(String numString) {
+    public void processNumber(String numString) throws Exception{
         currentNumberStr = numString;
 
         MetricsSubject.getInstance().notifyAllObservers(FloatingPointEventFilter.getInstance(), numString);

@@ -12,5 +12,5 @@ public interface PersisterI {
 	/**
 	 * Function to write the final data into the output file
 	 */
-	void writeToFile();
+	void writeToFile() throws Exception;
 }

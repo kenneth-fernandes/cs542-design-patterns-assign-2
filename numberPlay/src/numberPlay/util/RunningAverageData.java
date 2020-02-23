@@ -51,7 +51,7 @@ public class RunningAverageData implements PersisterI, RunningAverageResultsI {
 	 * Function to write the final data into an output file
 	 */
 	@Override
-	public void writeToFile() {
+	public void writeToFile() throws Exception{
 
 		try {
 			outputFile = new File(InputParametersData.getInstance().getRunAvgOutFile());

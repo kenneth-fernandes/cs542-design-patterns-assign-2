@@ -52,7 +52,7 @@ public class TopKNumbersObserver implements ObserverI {
      */
 
     @Override
-    public void update(FilterI triggerEvent, String dataString) {
+    public void update(FilterI triggerEvent, String dataString) throws Exception{
         if (!triggerEvent.equals(ProcessingCompleteEventFilter.getInstance())) {
 
             double currentNum = NumberProcessor.getInstance().roundNumber(Double.parseDouble(dataString));

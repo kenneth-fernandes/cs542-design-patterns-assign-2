@@ -57,7 +57,7 @@ public class NumberPeaksObserver implements ObserverI {
      * @param dataString   - Data of type string
      */
     @Override
-    public void update(FilterI triggerEvent, String dataString) {
+    public void update(FilterI triggerEvent, String dataString) throws Exception{
 
         if (!triggerEvent.equals(ProcessingCompleteEventFilter.getInstance())) {
             currentNum = Double.parseDouble(dataString);

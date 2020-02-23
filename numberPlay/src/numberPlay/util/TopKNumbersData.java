@@ -55,7 +55,7 @@ public class TopKNumbersData implements PersisterI, TopKNumbersResultsI {
 	 * Function to write the final data to the output file
 	 */
 	@Override
-	public void writeToFile() {
+	public void writeToFile() throws Exception{
 
 		try {
 			outputFile = new File(InputParametersData.getInstance().getTopKNumOutFilePath());

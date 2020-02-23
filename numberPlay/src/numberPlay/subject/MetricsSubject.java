@@ -70,7 +70,7 @@ public class MetricsSubject implements SubjectI {
      * @param dataStr      - Input data of type string
      */
     @Override
-    public void notifyAllObservers(FilterI triggerEvent, String dataStr) {
+    public void notifyAllObservers(FilterI triggerEvent, String dataStr) throws Exception{
 
         for (Entry<FilterI, List<ObserverI>> entry : metricsObserverMap.entrySet()) {
             if (entry.getKey().test(dataStr) && entry.getKey().equals(triggerEvent)) {

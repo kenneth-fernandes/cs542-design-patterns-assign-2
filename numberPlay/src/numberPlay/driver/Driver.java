@@ -1,6 +1,5 @@
 package numberPlay.driver;
 
-
 import numberPlay.util.FileProcessor;
 import numberPlay.util.InputParametersData;
 import numberPlay.util.UtilityConstants;
@@ -45,19 +44,25 @@ public class Driver {
 
 			System.exit(0);
 		}
-
 		/*
 		 * Setting the input parameters into InputParametersData object data members
 		 */
 		InputParametersData inputParamsDataObj = InputParametersData.getInstance();
+		try {
 
-		inputParamsDataObj.setInputFilePath(args[0]);
-		inputParamsDataObj.setRunAvgWindowSize(args[1]);
-		inputParamsDataObj.setRunAvgOutFile(args[2]);
-		inputParamsDataObj.setKValue(args[3]);
-		inputParamsDataObj.setTopKNumOutFilePath(args[4]);
-		inputParamsDataObj.setNumPeaksOutFilePath(args[5]);
+			inputParamsDataObj.setInputFilePath(args[0]);
+			inputParamsDataObj.setRunAvgWindowSize(args[1]);
+			inputParamsDataObj.setRunAvgOutFile(args[2]);
+			inputParamsDataObj.setKValue(args[3]);
+			inputParamsDataObj.setTopKNumOutFilePath(args[4]);
+			inputParamsDataObj.setNumPeaksOutFilePath(args[5]);
+			inputParamsDataObj.validateInputArgs();
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+			System.exit(0);
+			
 
+		}
 		/*
 		 * Registering the observers based on events section starts
 		 */
