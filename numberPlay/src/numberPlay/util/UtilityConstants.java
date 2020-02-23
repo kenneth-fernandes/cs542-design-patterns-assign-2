@@ -25,7 +25,9 @@ public class UtilityConstants {
     /**
      * Exception message constants
      */
-    public final String INVALID_FILEPATH_ERR_MESSAGE = "invalid input file or input file in incorrect location";
+    public final String INVALID_INPUT_FILEPATH_ERR_MESSAGE = "invalid input file or input file in incorrect location";
+    public final String INVALID_OUTPUT_FILEPATH_ERR_MESSAGE = "invalid output file or output file in incorrect location";
+    public final String FILECLOSE_FAILURE_ERR_MESSAGE = "failed to close file";
 
     /**
      * Queue implementation constants

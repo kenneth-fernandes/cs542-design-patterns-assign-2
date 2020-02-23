@@ -53,6 +53,7 @@ public class NumberPeaksObserver implements ObserverI {
 
         } else {
             numPeaksDataObj.writeToFile();
+            numPeaksDataObj.close();
 
         }
 
