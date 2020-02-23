@@ -35,6 +35,27 @@ public class UtilityConstants {
     public final String QUEUE_EMPTY_MSG = "Queue is empty.";
     public final String QUEUE_FULL_MSG = "Queue is full.";
 
+    /**
+     * Metrics calculation constants
+     */
+    public final String DECIMAL_FORMAT_STRING = "#.##";
+
+    /**
+     * Regular Expression constants
+     */
+    public final String INTEGER_REGULAR_EXP_STRING = "[-+]?[0-9]+";
+    public final String FLOATING_POINT_REG_EXP_STRING = "[+-]?[0-9]*\\.+[0-9]+";
+
+    /**
+     * Util string constants
+     */
+    public final String EMPTY_STRING = "";
+    public final String NEWLINE_STRING = "\n";
+
+    /**
+     * Function that returns the singleton object of UtilityConstants class itself
+     * @return - Object of UtilityConstants class
+     */
     public static UtilityConstants getInstance() {
         if (null == utilConstsObj) {
             utilConstsObj = new UtilityConstants();

@@ -6,5 +6,11 @@ package numberPlay.util;
  * numbers.
  */
 public interface RunningAverageResultsI {
-	void store(Double d);
+	/**
+	 * Function to store the data of running average
+	 * 
+	 * @param data - The data of type Double that would be stored for further
+	 *             writing to an output file
+	 */
+	void store(Double data);
 }
