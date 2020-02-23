@@ -11,12 +11,20 @@ public class RunningAverageData implements PersisterI, RunningAverageResultsI {
 		return runningAvgDatObj;
 	}
 
+	private String runAvgFinalData;
+
+	private RunningAverageData() {
+		runAvgFinalData = "";
+	}
+
 	@Override
 	public void store(Double d) {
+		runAvgFinalData = runAvgFinalData.concat(d.toString().concat("\n"));
 	}
 
 	@Override
 	public void writeToFile() {
+		System.out.println(runAvgFinalData);
 	}
 
 	@Override

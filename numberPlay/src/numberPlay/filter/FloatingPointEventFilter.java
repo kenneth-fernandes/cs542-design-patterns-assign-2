@@ -5,13 +5,16 @@ import java.lang.Double;
 public class FloatingPointEventFilter implements FilterI {
 
     private static FloatingPointEventFilter floatPointEvntFilterObj;
-    //private BigDecimal bigDecimalNum;
+    // private BigDecimal bigDecimalNum;
 
     public static FloatingPointEventFilter getInstance() {
         if (null == floatPointEvntFilterObj) {
             floatPointEvntFilterObj = new FloatingPointEventFilter();
         }
         return floatPointEvntFilterObj;
+    }
+
+    private FloatingPointEventFilter() {
     }
 
     @Override

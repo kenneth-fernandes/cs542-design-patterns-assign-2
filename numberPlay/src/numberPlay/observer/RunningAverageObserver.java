@@ -1,14 +1,25 @@
 package numberPlay.observer;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import numberPlay.filter.FilterI;
+import numberPlay.filter.ProcessingCompleteEventFilter;
 import numberPlay.processing.NumberProcessor;
-import numberPlay.util.RunAvgCalnQueue;
+import numberPlay.util.InputParametersData;
+import numberPlay.util.RunningAverageData;
+import numberPlay.util.RunningAverageQueue;
+import numberPlay.util.RunningAverageResultsI;
 
 public class RunningAverageObserver implements ObserverI {
 
-    private static ObserverI runningAvgObsverObj;
-    private boolean isIntegerEvent;
-    private String outputStr = "";
+    private static RunningAverageObserver runningAvgObsverObj;
+    private RunningAverageQueue runAvgQueue;
+
+    private int currentNum;
+    private double runningAvg;
+    private RunningAverageData runningAvgResDataObj;
+    private List<Integer> runningAvgLst;
 
     /**
      * Function to get instance of RunningAverageObserver
@@ -22,27 +33,39 @@ public class RunningAverageObserver implements ObserverI {
         return runningAvgObsverObj;
     }
 
-    @Override
-    public void update(FilterI triggerEvent,String dataString) {
-        //if (event.test(str)) {
-            Double avg = 0.0;
-            isIntegerEvent = true;
-            int num = Integer.parseInt(NumberProcessor.getInstance().getCurrentNumStr());
-            RunAvgCalnQueue q = RunAvgCalnQueue.getInstance();
-            if (q.isQueueFull()) {
-                q.dequeue();
-            }
-            q.enqueue(num);
-
-            int[] elemArr = q.getElementsInQueue();
-            
-            for (int i = 0; i < q.getElemsInQueueCount(); i += 1) {
-                avg += elemArr[i];
-            }
-            avg /= (double) q.getElemsInQueueCount();
-            outputStr = outputStr.concat(avg+"\n");
-            //System.out.println(outputStr);
-
-       // }
+    public RunningAverageObserver() {
+        runAvgQueue = new RunningAverageQueue(InputParametersData.getInstance().getRunAvgWindowSize());
+        runningAvgResDataObj = RunningAverageData.getInstance();
+        runningAvgLst = new ArrayList<Integer>();
     }
-}
+
+    @Override
+    public void update(FilterI triggerEvent, String dataString) {
+
+        if (!triggerEvent.equals(ProcessingCompleteEventFilter.getInstance())) {
+
+            runningAvg = (double) 0;
+            currentNum = Integer.parseInt(NumberProcessor.getInstance().getCurrentNumStr());
+
+            if (runningAvgLst.size() == InputParametersData.getInstance().getRunAvgWindowSize()) {
+                runningAvgLst.remove(0);
+            }
+            runningAvgLst.add(currentNum);
+
+            Collections.sort(runningAvgLst);
+
+            for (Integer number : runningAvgLst) {
+                runningAvg += number;
+
+            }
+            runningAvg /= (double) runningAvgLst.size();
+
+            runningAvgResDataObj.store(runningAvg);
+
+        } else {
+            runningAvgResDataObj.writeToFile();
+
+        }
+
+    }
+};

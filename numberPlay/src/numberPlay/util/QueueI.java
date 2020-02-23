@@ -7,11 +7,10 @@ public interface QueueI {
 
     public boolean isQueueFull();
 
-    public int peek();
+    // public int peek();
 
     public void enqueue(int element);
 
     public void dequeue();
-    
 
 }

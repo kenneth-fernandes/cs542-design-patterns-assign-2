@@ -28,7 +28,7 @@ public final class FileProcessor {
 			throws InvalidPathException, SecurityException, FileNotFoundException, IOException {
 
 		if (!Files.exists(Paths.get(inputFilePath))) {
-			throw new FileNotFoundException("invalid input file or input file in incorrect location");
+			throw new FileNotFoundException(UtilityConstants.getInstance().INVALID_FILEPATH_ERR_MESSAGE);
 		}
 
 		reader = new BufferedReader(new FileReader(new File(inputFilePath)));

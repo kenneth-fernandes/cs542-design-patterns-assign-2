@@ -12,6 +12,9 @@ public class IntegerEventFilter implements FilterI {
         return intEvntFilterObj;
     }
 
+    private IntegerEventFilter() {
+    }
+
     @Override
     public boolean test(final String str) {
         try {
