@@ -53,6 +53,7 @@ public class MetricsSubject implements SubjectI {
                 for (ObserverI observer : entry.getValue()) {
 
                     observer.update(entry.getKey(), dataStr);
+                    
                 }
             }
 

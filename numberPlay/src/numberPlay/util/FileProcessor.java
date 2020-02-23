@@ -28,7 +28,7 @@ public final class FileProcessor {
 			throws InvalidPathException, SecurityException, FileNotFoundException, IOException {
 
 		if (!Files.exists(Paths.get(inputFilePath))) {
-			throw new FileNotFoundException(UtilityConstants.getInstance().INVALID_FILEPATH_ERR_MESSAGE);
+			throw new FileNotFoundException(UtilityConstants.getInstance().INVALID_INPUT_FILEPATH_ERR_MESSAGE);
 		}
 
 		reader = new BufferedReader(new FileReader(new File(inputFilePath)));
@@ -49,7 +49,7 @@ public final class FileProcessor {
 			reader.close();
 			line = null;
 		} catch (IOException e) {
-			throw new IOException("failed to close file", e);
+			throw new IOException(UtilityConstants.getInstance().FILECLOSE_FAILURE_ERR_MESSAGE, e);
 		}
 	}
 }

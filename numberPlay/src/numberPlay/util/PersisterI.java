@@ -6,5 +6,5 @@ package numberPlay.util;
 public interface PersisterI {
 	void close();
 
-	void writeToFile();
+	void writeToFile ();
 }

@@ -8,13 +8,11 @@ import numberPlay.filter.ProcessingCompleteEventFilter;
 import numberPlay.processing.NumberProcessor;
 import numberPlay.util.InputParametersData;
 import numberPlay.util.RunningAverageData;
-import numberPlay.util.RunningAverageQueue;
-import numberPlay.util.RunningAverageResultsI;
+
 
 public class RunningAverageObserver implements ObserverI {
 
     private static RunningAverageObserver runningAvgObsverObj;
-    private RunningAverageQueue runAvgQueue;
 
     private int currentNum;
     private double runningAvg;
@@ -33,8 +31,8 @@ public class RunningAverageObserver implements ObserverI {
         return runningAvgObsverObj;
     }
 
+    
     public RunningAverageObserver() {
-        runAvgQueue = new RunningAverageQueue(InputParametersData.getInstance().getRunAvgWindowSize());
         runningAvgResDataObj = RunningAverageData.getInstance();
         runningAvgLst = new ArrayList<Integer>();
     }
@@ -64,6 +62,7 @@ public class RunningAverageObserver implements ObserverI {
 
         } else {
             runningAvgResDataObj.writeToFile();
+            runningAvgResDataObj.close();
 
         }
 

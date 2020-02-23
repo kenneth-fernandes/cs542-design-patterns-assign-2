@@ -43,7 +43,7 @@ public class InputParametersData {
         runAvgOutFile = path;
     }
 
-    public String runAvgOutFile() {
+    public String getRunAvgOutFile() {
         return runAvgOutFile;
     }
 
