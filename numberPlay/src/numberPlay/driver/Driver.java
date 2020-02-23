@@ -92,6 +92,10 @@ public class Driver {
 				numProcessorObj.processNumber(numString);
 			}
 		}
+		fileProcessorObj.close();
+
+		metricsSubjObj.notifyAllObservers(ProcessingCompleteEventFilter.getInstance(),
+				UtilityConstants.getInstance().PROCESSING_COMPLETE_EVENT);
 
 		// FIXME Create an instance of each of the classes implementing PersisterI and
 		// the

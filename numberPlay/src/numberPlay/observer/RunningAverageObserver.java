@@ -1,17 +1,25 @@
 package numberPlay.observer;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import numberPlay.filter.FilterI;
 import numberPlay.filter.ProcessingCompleteEventFilter;
 import numberPlay.processing.NumberProcessor;
 import numberPlay.util.InputParametersData;
+import numberPlay.util.RunningAverageData;
 import numberPlay.util.RunningAverageQueue;
+import numberPlay.util.RunningAverageResultsI;
 
 public class RunningAverageObserver implements ObserverI {
 
     private static RunningAverageObserver runningAvgObsverObj;
     private RunningAverageQueue runAvgQueue;
 
-    private String outputStr = "";
+    private int currentNum;
+    private double runningAvg;
+    private RunningAverageData runningAvgResDataObj;
+    private List<Integer> runningAvgLst;
 
     /**
      * Function to get instance of RunningAverageObserver
@@ -27,6 +35,8 @@ public class RunningAverageObserver implements ObserverI {
 
     public RunningAverageObserver() {
         runAvgQueue = new RunningAverageQueue(InputParametersData.getInstance().getRunAvgWindowSize());
+        runningAvgResDataObj = RunningAverageData.getInstance();
+        runningAvgLst = new ArrayList<Integer>();
     }
 
     @Override
@@ -34,29 +44,28 @@ public class RunningAverageObserver implements ObserverI {
 
         if (!triggerEvent.equals(ProcessingCompleteEventFilter.getInstance())) {
 
-            Double avg = 0.0;
+            runningAvg = (double) 0;
+            currentNum = Integer.parseInt(NumberProcessor.getInstance().getCurrentNumStr());
 
-            int num = Integer.parseInt(NumberProcessor.getInstance().getCurrentNumStr());
-
-            if (runAvgQueue.isQueueFull()) {
-                runAvgQueue.dequeue();
+            if (runningAvgLst.size() == InputParametersData.getInstance().getRunAvgWindowSize()) {
+                runningAvgLst.remove(0);
             }
-            runAvgQueue.enqueue(num);
+            runningAvgLst.add(currentNum);
 
-            int[] elemArr = runAvgQueue.getElementsInQueue();
+            Collections.sort(runningAvgLst);
 
-            for (int i = 0; i < runAvgQueue.getElemsInQueueCount(); i += 1) {
-                avg += elemArr[i];
+            for (Integer number : runningAvgLst) {
+                runningAvg += number;
+
             }
-            avg /= (double) runAvgQueue.getElemsInQueueCount();
-            outputStr = outputStr.concat(avg + ",");
-            // System.out.println(outputStr);
+            runningAvg /= (double) runningAvgLst.size();
 
-            // }
+            runningAvgResDataObj.store(runningAvg);
 
         } else {
+            runningAvgResDataObj.writeToFile();
 
         }
 
     }
-}
+};

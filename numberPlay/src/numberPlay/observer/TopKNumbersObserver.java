@@ -1,17 +1,25 @@
 package numberPlay.observer;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import numberPlay.filter.FilterI;
 import numberPlay.filter.ProcessingCompleteEventFilter;
 import numberPlay.util.InputParametersData;
+import numberPlay.util.TopKNumbersData;
 import numberPlay.util.TopKNumbersQueue;
 
 public class TopKNumbersObserver implements ObserverI {
 
     private static TopKNumbersObserver topKNumObservrsObj;
     private TopKNumbersQueue topKNumArrObj;
+    private TopKNumbersData topKNumDataObj;
+    List<Double> topKNumberLst;
 
     private TopKNumbersObserver() {
         topKNumArrObj = new TopKNumbersQueue(InputParametersData.getInstance().getKValue());
+        topKNumDataObj = TopKNumbersData.getInstance();
+        topKNumberLst = new ArrayList<Double>();
     }
 
     /**
@@ -31,18 +39,21 @@ public class TopKNumbersObserver implements ObserverI {
         if (!triggerEvent.equals(ProcessingCompleteEventFilter.getInstance())) {
 
             double num = Double.parseDouble(dataString);
-            if (topKNumArrObj.isQueueFull()) {
-                topKNumArrObj.dequeue();
+            if (topKNumberLst.size() == InputParametersData.getInstance().getKValue()) {
+                topKNumberLst.remove(2);
             }
-            topKNumArrObj.enqueue(num);
-            double[] arr = topKNumArrObj.getElementsInQueue();
+            topKNumberLst.add(num);
 
-            for (int i = topKNumArrObj.getElemsInQueueCount() - 1; i >= 0; i -= 1) {
-                System.out.print(arr[i] + ", ");
-            }
-            System.out.println();
+            Collections.sort(topKNumberLst, Collections.reverseOrder());
+
+            topKNumDataObj.store(topKNumberLst);
+            /*
+             * for (int i = topKNumArrObj.getElemsInQueueCount() - 1; i >= 0; i -= 1) {
+             * System.out.print(arr[i] + ", "); }
+             */
 
         } else {
+            topKNumDataObj.writeToFile();
         }
 
     }
