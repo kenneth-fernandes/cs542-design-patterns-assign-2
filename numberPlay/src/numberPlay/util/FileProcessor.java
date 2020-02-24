@@ -82,4 +82,9 @@ public final class FileProcessor {
 			throw new IOException(UtilityConstants.getInstance().FILECLOSE_FAILURE_ERR_MESSAGE, e);
 		}
 	}
+
+	@Override
+    public String toString(){
+        return "File Processor class";
+    }
 }

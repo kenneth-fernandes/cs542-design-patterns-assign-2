@@ -17,6 +17,8 @@ public class NumberPeaksData implements PersisterI, NumberPeaksResultsI {
 
 	// Data member of NumberPeaksData to store the output file
 	private File outputFile;
+	// Data member of NumberPeaksData to check if file is processed properly
+	public boolean FileProcessed;
 
 	/**
 	 * Function that returns the singleton object of NumberPeaksData
@@ -35,6 +37,7 @@ public class NumberPeaksData implements PersisterI, NumberPeaksResultsI {
 	 */
 	private NumberPeaksData() {
 		numPeaksFinalData = UtilityConstants.getInstance().EMPTY_STRING;
+		FileProcessed = false;
 	}
 
 	/**
@@ -50,7 +53,7 @@ public class NumberPeaksData implements PersisterI, NumberPeaksResultsI {
 	 * Function to write the final data into an output file
 	 */
 	@Override
-	public void writeToFile() throws Exception{
+	public void writeToFile() throws Exception {
 
 		try {
 			outputFile = new File(InputParametersData.getInstance().getNumPeaksOutFilePath());
@@ -63,27 +66,37 @@ public class NumberPeaksData implements PersisterI, NumberPeaksResultsI {
 
 			writer = new BufferedWriter(new FileWriter(outputFile));
 			writer.write(numPeaksFinalData);
+			FileProcessed = true;
 
 		} catch (InvalidPathException | SecurityException | IOException ex) {
 			try {
 				writer.close();
 
 			} catch (NullPointerException | IOException e) {
-				System.out.println(UtilityConstants.getInstance().FILECLOSE_FAILURE_ERR_MESSAGE);
+				throw new IOException(UtilityConstants.getInstance().FILECLOSE_FAILURE_ERR_MESSAGE);
 			}
 		}
 	}
 
 	/**
 	 * Function to close the file writer
+	 * 
+	 * @throws IOException
 	 */
 	@Override
-	public void close() {
+	public void close() throws IOException {
 		try {
 			writer.close();
+			FileProcessed = true;
 
 		} catch (NullPointerException | IOException e) {
-			System.out.println(UtilityConstants.getInstance().FILECLOSE_FAILURE_ERR_MESSAGE);
+			throw new IOException(UtilityConstants.getInstance().FILECLOSE_FAILURE_ERR_MESSAGE);
+			
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Number Peaks Data class";
 	}
 }

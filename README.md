@@ -44,7 +44,36 @@ ant run -buildfile numberPlay/src/build.xml \
 
 -----------------------------------------------------------------------
 ## Description:
+1. Assumption:
+- The input.txt file is well formatted with the numbers of integers and floating point numbers.
+- If the lines in a file do not have a line, then the next number on next line would be processed.
+- Each number is on one line.
+- Absoulte path of the files to be passed as input arguments while executing the program.
+- Input arguments to the run command are in the order input.txt file path, metrics calculated result files path.
 
+2. Data Structures:
+- List<Integer> - Used for storing the numbers for calculating the running average.
+- List<Double> - Used for storing the Top K Numbers.
+- List<ObserverI> - Used th objects of the observers.
+- HashMap<FilterI, List<ObserverI>> - Used for storing the List of Observers pertaining to the event in the form of FilterI
+
+3. External Materials:
+- Used Collection.sort() for sorting the ArrayList while retrieving the Top K.
+- 
+
+4. Compiling:
+- Follow the instructions as mentioned above.
+
+5. Execute Program:
+- Follow the instruction as mentioned above.
+
+6. Code Working:
+- First the inputs are read from command line and validated for any missing or invalid values.
+- An Input Paramter class holds the values of the input parameters.
+- The Observers are registered based on the requirement.
+- Number is read from the file, line by line, ignoring empty lines.
+- The Observers are notified based on the event filter and internally the calls the update() of the observer to execute the metrics calculation
+- Once, all the processing is done, the processing complete event is triggered and the output is written to the respective files.
 
 -----------------------------------------------------------------------
 ### Academic Honesty statement:

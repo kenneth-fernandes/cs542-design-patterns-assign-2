@@ -35,4 +35,9 @@ public class IntegerEventFilter implements FilterI {
         return str.matches(UtilityConstants.getInstance().INTEGER_REGULAR_EXP_STRING);
     }
 
+    @Override
+    public String toString(){
+        return "Integer Filter class";
+    }
+
 }

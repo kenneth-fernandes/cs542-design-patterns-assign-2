@@ -71,4 +71,9 @@ public class TopKNumbersObserver implements ObserverI {
         }
 
     }
+
+    @Override
+    public String toString(){
+        return "Top K Numbers Observer class";
+    }
 }

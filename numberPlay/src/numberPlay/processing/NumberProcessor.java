@@ -72,4 +72,9 @@ public class NumberProcessor {
         DecimalFormat df = new DecimalFormat(UtilityConstants.getInstance().DECIMAL_FORMAT_STRING);
         return Double.parseDouble(df.format(number));
     }
+
+    @Override
+    public String toString(){
+        return "Number Processor class";
+    }
 }

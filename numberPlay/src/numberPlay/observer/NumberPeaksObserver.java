@@ -79,4 +79,9 @@ public class NumberPeaksObserver implements ObserverI {
         }
 
     }
+
+    @Override
+    public String toString(){
+        return "Number Peaks Observer class";
+    }
 }

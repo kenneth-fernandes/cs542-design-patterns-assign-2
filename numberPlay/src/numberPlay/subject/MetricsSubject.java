@@ -83,4 +83,9 @@ public class MetricsSubject implements SubjectI {
 
     }
 
+    @Override
+    public String toString(){
+        return "Metrics Subject class";
+    }
+
 }

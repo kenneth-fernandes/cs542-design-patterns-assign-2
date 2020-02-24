@@ -21,12 +21,15 @@ public class TopKNumbersData implements PersisterI, TopKNumbersResultsI {
 	// Data member of TopKNumbersData that stores the Output file object to write
 	// the data
 	private File outputFile;
+	// Data member of NumberPeaksData to check if file is processed properly
+	public boolean isFileProcessed;
 
 	/**
 	 * TopKNumbersData constructor
 	 */
 	private TopKNumbersData() {
 		topKNumbersFinalData = UtilityConstants.getInstance().EMPTY_STRING;
+		isFileProcessed = false;
 	}
 
 	/**
@@ -55,7 +58,7 @@ public class TopKNumbersData implements PersisterI, TopKNumbersResultsI {
 	 * Function to write the final data to the output file
 	 */
 	@Override
-	public void writeToFile() throws Exception{
+	public void writeToFile() throws Exception {
 
 		try {
 			outputFile = new File(InputParametersData.getInstance().getTopKNumOutFilePath());
@@ -67,27 +70,38 @@ public class TopKNumbersData implements PersisterI, TopKNumbersResultsI {
 
 			writer = new BufferedWriter(new FileWriter(outputFile));
 			writer.write(topKNumbersFinalData);
+			isFileProcessed = true;
 
 		} catch (InvalidPathException | SecurityException | IOException ex) {
 			try {
 				writer.close();
+				
 
 			} catch (NullPointerException | IOException e) {
-				System.out.println(UtilityConstants.getInstance().FILECLOSE_FAILURE_ERR_MESSAGE);
+				
+				throw new IOException(UtilityConstants.getInstance().FILECLOSE_FAILURE_ERR_MESSAGE);
 			}
 		}
 	}
 
 	/**
 	 * Function to close the file writer
+	 * 
+	 * @throws IOException
 	 */
 	@Override
-	public void close() {
+	public void close() throws IOException {
 		try {
 			writer.close();
+			isFileProcessed = true;
 
 		} catch (NullPointerException | IOException e) {
-			System.out.println(UtilityConstants.getInstance().FILECLOSE_FAILURE_ERR_MESSAGE);
+			throw new IOException(UtilityConstants.getInstance().FILECLOSE_FAILURE_ERR_MESSAGE);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Top K Numbers Data class";
 	}
 }

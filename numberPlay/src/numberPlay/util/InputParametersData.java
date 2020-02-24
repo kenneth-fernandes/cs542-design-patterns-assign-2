@@ -264,10 +264,14 @@ public class InputParametersData {
     }
 
     public void validateInputArgs() throws Exception {
-        ValidatorUtil.validate("Failure Occurred ", ValidatorFetcher.inputFilePathValidation(this),
-                ValidatorFetcher.numPeaksOutputFilePathValidation(this),
+        ValidatorUtil.validate(UtilityConstants.getInstance().FAILURE_OCCURED,
+                ValidatorFetcher.inputFilePathValidation(this), ValidatorFetcher.numPeaksOutputFilePathValidation(this),
                 ValidatorFetcher.runAvgOutputFilePathValidation(this), ValidatorFetcher.runAvgWindowSizeValidator(this),
                 ValidatorFetcher.topKOutputFilePathValidation(this), ValidatorFetcher.topKValueValidation(this));
     }
 
+    @Override
+    public String toString() {
+        return "Input parameters data class";
+    }
 }
