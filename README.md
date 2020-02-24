@@ -58,8 +58,7 @@ ant run -buildfile numberPlay/src/build.xml \
 - HashMap<FilterI, List<ObserverI>> - Used for storing the List of Observers pertaining to the event in the form of FilterI
 
 3. External Materials:
-- Used Collection.sort() for sorting the ArrayList while retrieving the Top K.
-- 
+- Used Collection.sort() for sorting the ArrayList while retrieving the Top K numbers.
 
 4. Compiling:
 - Follow the instructions as mentioned above.
