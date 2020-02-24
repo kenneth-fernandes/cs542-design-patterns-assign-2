@@ -30,5 +30,5 @@ public interface SubjectI {
      * @param triggerEvent - Filter obejct containing the trigger event
      * @param dataStr - Input data of type string
      */
-    public void notifyAllObservers(FilterI triggerEvent, String dataStr);
+    public void notifyAllObservers(FilterI triggerEvent, String dataStr) throws Exception;
 }

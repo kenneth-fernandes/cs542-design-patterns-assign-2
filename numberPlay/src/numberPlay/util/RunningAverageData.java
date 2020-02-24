@@ -19,6 +19,8 @@ public class RunningAverageData implements PersisterI, RunningAverageResultsI {
 	private File outputFile;
 	// Data member of RunningAverageData to store the final running average data
 	private String runAvgFinalData;
+	// Data member of NumberPeaksData to check if file is processed properly
+	public boolean isFileProcessed;
 
 	/**
 	 * RunningAverageData constructor
@@ -45,13 +47,14 @@ public class RunningAverageData implements PersisterI, RunningAverageResultsI {
 	@Override
 	public void store(Double d) {
 		runAvgFinalData = runAvgFinalData.concat(d.toString().concat(UtilityConstants.getInstance().NEWLINE_STRING));
+		isFileProcessed = false;
 	}
 
 	/**
 	 * Function to write the final data into an output file
 	 */
 	@Override
-	public void writeToFile() {
+	public void writeToFile() throws Exception {
 
 		try {
 			outputFile = new File(InputParametersData.getInstance().getRunAvgOutFile());
@@ -64,27 +67,38 @@ public class RunningAverageData implements PersisterI, RunningAverageResultsI {
 
 			writer = new BufferedWriter(new FileWriter(outputFile));
 			writer.write(runAvgFinalData);
-
+			isFileProcessed = true;
 		} catch (InvalidPathException | SecurityException | IOException ex) {
 			try {
 				writer.close();
 
 			} catch (NullPointerException | IOException e) {
-				System.out.println(UtilityConstants.getInstance().FILECLOSE_FAILURE_ERR_MESSAGE);
+
+				throw new IOException(UtilityConstants.getInstance().FILECLOSE_FAILURE_ERR_MESSAGE);
 			}
 		}
 	}
 
 	/**
 	 * Function to close the file writer
+	 * 
+	 * @throws IOException
 	 */
 	@Override
-	public void close() {
+	public void close() throws IOException {
 		try {
 			writer.close();
+			isFileProcessed = true;
 
 		} catch (NullPointerException | IOException e) {
-			System.out.println(UtilityConstants.getInstance().FILECLOSE_FAILURE_ERR_MESSAGE);
+
+			throw new IOException(UtilityConstants.getInstance().FILECLOSE_FAILURE_ERR_MESSAGE);
+
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Running Average Data class";
 	}
 }

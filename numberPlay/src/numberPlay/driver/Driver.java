@@ -1,6 +1,5 @@
 package numberPlay.driver;
 
-
 import numberPlay.util.FileProcessor;
 import numberPlay.util.InputParametersData;
 import numberPlay.util.UtilityConstants;
@@ -45,66 +44,84 @@ public class Driver {
 
 			System.exit(0);
 		}
-
 		/*
 		 * Setting the input parameters into InputParametersData object data members
 		 */
 		InputParametersData inputParamsDataObj = InputParametersData.getInstance();
+		try {
 
-		inputParamsDataObj.setInputFilePath(args[0]);
-		inputParamsDataObj.setRunAvgWindowSize(args[1]);
-		inputParamsDataObj.setRunAvgOutFile(args[2]);
-		inputParamsDataObj.setKValue(args[3]);
-		inputParamsDataObj.setTopKNumOutFilePath(args[4]);
-		inputParamsDataObj.setNumPeaksOutFilePath(args[5]);
+			inputParamsDataObj.setInputFilePath(args[0]);
+			inputParamsDataObj.setRunAvgWindowSize(args[1]);
+			inputParamsDataObj.setRunAvgOutFile(args[2]);
+			inputParamsDataObj.setKValue(args[3]);
+			inputParamsDataObj.setTopKNumOutFilePath(args[4]);
+			inputParamsDataObj.setNumPeaksOutFilePath(args[5]);
+			inputParamsDataObj.validateInputArgs();
 
-		/*
-		 * Registering the observers based on events section starts
-		 */
-		// Retrieving the MetricsSubject object
-		SubjectI metricsSubjObj = MetricsSubject.getInstance();
+			/*
+			 * Registering the observers based on events section starts
+			 */
+			// Retrieving the MetricsSubject object
+			SubjectI metricsSubjObj = MetricsSubject.getInstance();
 
-		// Registering RunningAverageObserver object to Integer and Process complete
-		// events
-		metricsSubjObj.registerObserver(RunningAverageObserver.getInstance(), IntegerEventFilter.getInstance());
-		metricsSubjObj.registerObserver(RunningAverageObserver.getInstance(),
-				ProcessingCompleteEventFilter.getInstance());
+			// Registering RunningAverageObserver object to Integer and Process complete
+			// events
+			metricsSubjObj.registerObserver(RunningAverageObserver.getInstance(), IntegerEventFilter.getInstance());
+			metricsSubjObj.registerObserver(RunningAverageObserver.getInstance(),
+					ProcessingCompleteEventFilter.getInstance());
 
-		// Registering TopKNumbersObserver object to Integer, Floating and Process
-		// Complete event
-		metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(), IntegerEventFilter.getInstance());
-		metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(), FloatingPointEventFilter.getInstance());
-		metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(), ProcessingCompleteEventFilter.getInstance());
+			// Registering TopKNumbersObserver object to Integer, Floating and Process
+			// Complete event
+			metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(), IntegerEventFilter.getInstance());
+			metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(), FloatingPointEventFilter.getInstance());
+			metricsSubjObj.registerObserver(TopKNumbersObserver.getInstance(),
+					ProcessingCompleteEventFilter.getInstance());
 
-		// Registering NumberPeaksObserver object to Integer, Floating point and process
-		// complete events
-		metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(), IntegerEventFilter.getInstance());
-		metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(), FloatingPointEventFilter.getInstance());
-		metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(), ProcessingCompleteEventFilter.getInstance());
+			// Registering NumberPeaksObserver object to Integer, Floating point and process
+			// complete events
+			metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(), IntegerEventFilter.getInstance());
+			metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(), FloatingPointEventFilter.getInstance());
+			metricsSubjObj.registerObserver(NumberPeaksObserver.getInstance(),
+					ProcessingCompleteEventFilter.getInstance());
 
-		/*
-		 * Registering the observers based on events section ends
-		 */
+			/*
+			 * Registering the observers based on events section ends
+			 */
 
-		// Retrieving the FileProcessor object
-		FileProcessor fileProcessorObj = FileProcessor.getInstance(inputParamsDataObj.getInputFilePath());
+			// Retrieving the FileProcessor object
+			FileProcessor fileProcessorObj = FileProcessor.getInstance(inputParamsDataObj.getInputFilePath());
 
-		// Retrieving the NumberProcessor object
-		NumberProcessor numProcessorObj = NumberProcessor.getInstance();
+			// Retrieving the NumberProcessor object
+			NumberProcessor numProcessorObj = NumberProcessor.getInstance();
 
-		// Retrieving each number from the input file and thenprocessing it.
-		String numString;
-		while ((numString = fileProcessorObj.poll()) != null) {
-			if (!numString.isEmpty()) {
-				numProcessorObj.processNumber(numString);
+			// Retrieving each number from the input file and thenprocessing it.
+			String numString;
+			while ((numString = fileProcessorObj.poll()) != null) {
+				if (!numString.isEmpty()) {
+					numProcessorObj.processNumber(numString);
+				}
 			}
+			fileProcessorObj.close();
+
+			// Notifying the observers when the processing is complete so that the outputs
+			// are persisted to their respective files
+			metricsSubjObj.notifyAllObservers(ProcessingCompleteEventFilter.getInstance(),
+					UtilityConstants.getInstance().PROCESSING_COMPLETE_EVENT);
+
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+			System.exit(0);
+
 		}
-		fileProcessorObj.close();
 
-		// Notifying the observers when the processing is complete so that the outputs
-		// are persisted to their respective files
-		metricsSubjObj.notifyAllObservers(ProcessingCompleteEventFilter.getInstance(),
-				UtilityConstants.getInstance().PROCESSING_COMPLETE_EVENT);
-
+		System.out.println("===================================================================");
+		System.out.println(
+				"Program execution has been successfully completed. Kindly checck the metrics calculated in the output files.");
 	}
+
+	@Override
+	public String toString() {
+		return "Driver class : main() method";
+	}
+
 }

@@ -35,4 +35,9 @@ public class FloatingPointEventFilter implements FilterI {
         return str.matches(UtilityConstants.getInstance().FLOATING_POINT_REG_EXP_STRING);
     }
 
+    @Override
+    public String toString(){
+        return "Floating Point Filter class";
+    }
+
 }

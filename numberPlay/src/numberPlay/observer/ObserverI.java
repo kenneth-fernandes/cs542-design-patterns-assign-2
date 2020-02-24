@@ -12,5 +12,5 @@ public interface ObserverI {
      * @param triggerEvent - - Trigger event Filter object
      * @param dataString   - Data of type string
      */
-    public void update(FilterI triggerEvent, String dataString);
+    public void update(FilterI triggerEvent, String dataString) throws Exception;
 }

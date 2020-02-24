@@ -10,4 +10,6 @@ public interface FilterI {
      * @return - boolean value true or false
      */
     public boolean test(String str);
+
+ 
 }

@@ -34,4 +34,9 @@ public class ProcessingCompleteEventFilter implements FilterI {
     public boolean test(String str) {
         return (str.compareToIgnoreCase(UtilityConstants.getInstance().PROCESSING_COMPLETE_EVENT) == 0);
     }
+
+    @Override
+    public String toString(){
+        return "Processing Complete Filter class";
+    }
 }

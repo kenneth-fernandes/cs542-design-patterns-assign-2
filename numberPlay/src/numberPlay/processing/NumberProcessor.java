@@ -53,7 +53,7 @@ public class NumberProcessor {
      * 
      * @param numString - Number in the form of string
      */
-    public void processNumber(String numString) {
+    public void processNumber(String numString) throws Exception{
         currentNumberStr = numString;
 
         MetricsSubject.getInstance().notifyAllObservers(FloatingPointEventFilter.getInstance(), numString);
@@ -71,5 +71,10 @@ public class NumberProcessor {
     public double roundNumber(double number) {
         DecimalFormat df = new DecimalFormat(UtilityConstants.getInstance().DECIMAL_FORMAT_STRING);
         return Double.parseDouble(df.format(number));
+    }
+
+    @Override
+    public String toString(){
+        return "Number Processor class";
     }
 }

@@ -11,6 +11,7 @@ import numberPlay.processing.NumberProcessor;
 
 import numberPlay.util.InputParametersData;
 import numberPlay.util.RunningAverageData;
+
 /**
  * Class containing methods to implement the running average functionality
  */
@@ -59,7 +60,7 @@ public class RunningAverageObserver implements ObserverI {
      * @param dataString   - Data of type string
      */
     @Override
-    public void update(FilterI triggerEvent, String dataString) {
+    public void update(FilterI triggerEvent, String dataString) throws Exception {
 
         if (!triggerEvent.equals(ProcessingCompleteEventFilter.getInstance())) {
 
@@ -87,5 +88,10 @@ public class RunningAverageObserver implements ObserverI {
 
         }
 
+    }
+
+    @Override
+    public String toString() {
+        return "Running Average Observer class";
     }
 };

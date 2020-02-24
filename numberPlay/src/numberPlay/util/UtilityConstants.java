@@ -27,7 +27,7 @@ public class UtilityConstants {
      */
     public final String INVALID_INPUT_FILEPATH_ERR_MESSAGE = "invalid input file or input file in incorrect location";
     public final String INVALID_OUTPUT_FILEPATH_ERR_MESSAGE = "invalid output file or output file in incorrect location";
-    public final String FILECLOSE_FAILURE_ERR_MESSAGE = "failed to close file";
+    public final String FILECLOSE_FAILURE_ERR_MESSAGE = "Error: Error while processing and closing the file.";
 
     /**
      * Queue implementation constants
@@ -53,7 +53,21 @@ public class UtilityConstants {
     public final String NEWLINE_STRING = "\n";
 
     /**
+     * 
+     * Validation message constants
+     */
+
+    public final String INCORRECT_EMPTY_INPUT_FILE_PATH_MSG = "Input file path is incorrect or empty.";
+    public final String INVALID_RUNAVG_WINDOW_SIZE_MSG = "Please enter a valid size for Running Average window size.";
+    public final String INCORRECT_EMPTY_RUNAVG_OUTPUT_FILE_PATH_MSG = "Running average output file path is incorrect or empty.";
+    public final String INVALID_K_VALUE_MSG = "Please enter a valid size for find int the Top K Numbers.";
+    public final String INCORRECT_EMPTY_TOPK_OUTPUT_FILE_PATH_MSG = "Top K Numbers output file path is incorrect or empty.";
+    public final String INVALID_NUMBER_PEAKS_OUTPUT_FILE_PATH_MSG = "Number Peaks output file path is incorrect or empty.";
+    public final String FAILURE_OCCURED = "Failure Occurred ";
+
+    /**
      * Function that returns the singleton object of UtilityConstants class itself
+     * 
      * @return - Object of UtilityConstants class
      */
     public static UtilityConstants getInstance() {
@@ -61,6 +75,11 @@ public class UtilityConstants {
             utilConstsObj = new UtilityConstants();
         }
         return utilConstsObj;
+    }
+
+    @Override
+    public String toString() {
+        return "Utility Constants class";
     }
 
 }

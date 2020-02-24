@@ -24,11 +24,129 @@ public class InputParametersData {
     private int kValue;
 
     /**
+     * Validator fetcher class
+     */
+    public static class ValidatorFetcher {
+        /**
+         * Function that validates input file path
+         * 
+         * @param inputParamsDataObj - Instance of InputParametersData
+         * @return - Validator interface implementation of run method for validation
+         */
+        public static ValidatorI inputFilePathValidation(InputParametersData inputParamsDataObj) {
+            return new ValidatorI() {
+                @Override
+                public void run() throws Exception {
+                    if (inputParamsDataObj.getInputFilePath() == UtilityConstants.getInstance().EMPTY_STRING) {
+                        throw new Exception(UtilityConstants.getInstance().INCORRECT_EMPTY_INPUT_FILE_PATH_MSG);
+                    }
+                }
+            };
+        }
+
+        /**
+         * Function for validating Running Average Calculation window size
+         * 
+         * @param inputParamsDataObj - Instance of InputParametersData
+         * @return - Validator interface implementation of run method for validation
+         */
+        public static ValidatorI runAvgWindowSizeValidator(InputParametersData inputParamsDataObj) {
+            return new ValidatorI() {
+                @Override
+                public void run() throws Exception {
+                    if (inputParamsDataObj.runAvgWindowSize <= 0) {
+                        throw new Exception(UtilityConstants.getInstance().INVALID_RUNAVG_WINDOW_SIZE_MSG);
+                    }
+                }
+            };
+        }
+
+        /**
+         * Function for validating the Running Average file path
+         * 
+         * @param inputParamsDataObj - Instance of InputParametersData
+         * @return - Validator interface implementation of run method for validation
+         */
+        public static ValidatorI runAvgOutputFilePathValidation(InputParametersData inputParamsDataObj) {
+            return new ValidatorI() {
+                @Override
+                public void run() throws Exception {
+                    if (inputParamsDataObj.runAvgOutFile == UtilityConstants.getInstance().EMPTY_STRING) {
+                        throw new Exception(UtilityConstants.getInstance().INCORRECT_EMPTY_RUNAVG_OUTPUT_FILE_PATH_MSG);
+                    }
+                }
+            };
+        }
+
+        /**
+         * Function for validating the K Value for Top K Numbers
+         * 
+         * @param inputParamsDataObj - Instance of InputParametersData
+         * @return - Validator interface implementation of run method for validation
+         */
+        public static ValidatorI topKValueValidation(InputParametersData inputParamsDataObj) {
+            return new ValidatorI() {
+                @Override
+                public void run() throws Exception {
+                    if (inputParamsDataObj.kValue <= 0) {
+                        throw new Exception(UtilityConstants.getInstance().INVALID_K_VALUE_MSG);
+                    }
+                }
+            };
+        }
+
+        /**
+         * Function to validate the output file path for writing the Top K Numbers
+         * calculation
+         * 
+         * @param inputParamsDataObj - Instance of InputParametersData
+         * @return - Validator interface implementation of run method for validation
+         */
+        public static ValidatorI topKOutputFilePathValidation(InputParametersData inputParamsDataObj) {
+            return new ValidatorI() {
+                @Override
+                public void run() throws Exception {
+                    if (inputParamsDataObj.topKNumOutFile == UtilityConstants.getInstance().EMPTY_STRING) {
+                        throw new Exception(UtilityConstants.getInstance().INCORRECT_EMPTY_TOPK_OUTPUT_FILE_PATH_MSG);
+                    }
+                }
+            };
+        }
+
+        /**
+         * Function to validate the output file path for storing the Number Peaks
+         * calculation
+         * 
+         * @param inputParamsDataObj - Instance of InputParametersData
+         * @return - Validator interface implementation of run method for validation
+         */
+        public static ValidatorI numPeaksOutputFilePathValidation(InputParametersData inputParamsDataObj) {
+            return new ValidatorI() {
+                @Override
+                public void run() throws Exception {
+                    if (inputParamsDataObj.numPeaksOutFile == UtilityConstants.getInstance().EMPTY_STRING) {
+                        throw new Exception(UtilityConstants.getInstance().INVALID_NUMBER_PEAKS_OUTPUT_FILE_PATH_MSG);
+                    }
+                }
+            };
+        }
+    }
+
+    /**
+     * InputParametersData constructor
+     * 
+     * @throws Exception
+     */
+    private InputParametersData() throws Exception {
+
+    }
+
+    /**
      * Function that returns the InputParametersData singleton object
      * 
      * @return - Returns the InputParametersData object
      */
-    public static InputParametersData getInstance() {
+    public static InputParametersData getInstance() throws Exception {
         if (null == inputParamsDataObj) {
             inputParamsDataObj = new InputParametersData();
         }
@@ -145,4 +263,15 @@ public class InputParametersData {
         return kValue;
     }
 
+    public void validateInputArgs() throws Exception {
+        ValidatorUtil.validate(UtilityConstants.getInstance().FAILURE_OCCURED,
+                ValidatorFetcher.inputFilePathValidation(this), ValidatorFetcher.numPeaksOutputFilePathValidation(this),
+                ValidatorFetcher.runAvgOutputFilePathValidation(this), ValidatorFetcher.runAvgWindowSizeValidator(this),
+                ValidatorFetcher.topKOutputFilePathValidation(this), ValidatorFetcher.topKValueValidation(this));
+    }
+
+    @Override
+    public String toString() {
+        return "Input parameters data class";
+    }
 }
