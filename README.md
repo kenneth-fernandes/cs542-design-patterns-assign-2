@@ -1,4 +1,4 @@
-# CS542 - Design Patterns: Assignment 1
+# CS542 - Design Patterns: Assignment 2
 ## Name: Kenneth Peter Fernandes 
 
 -----------------------------------------------------------------------
